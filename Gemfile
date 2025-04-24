@@ -30,7 +30,7 @@ gem 'prawn-table', '~> 0.2.2'
 
 # HTML templating and styling
 gem 'sass-rails'
-gem 'bootstrap', '~> 5.2.0'
+gem 'bootstrap', '~> 5.3.5'
 gem 'jquery-rails'
 gem 'chartkick'
 gem 'groupdate'
