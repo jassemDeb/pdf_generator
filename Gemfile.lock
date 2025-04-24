@@ -184,6 +184,7 @@ GEM
       racc (~> 1.4)
     nokogiri (1.18.8-x86_64-linux-musl)
       racc (~> 1.4)
+    ostruct (0.6.1)
     pdf-core (0.9.0)
     pdfkit (0.8.7.3)
     popper_js (2.11.8)
@@ -302,8 +303,9 @@ GEM
       base64
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
-    wicked_pdf (2.6.3)
+    wicked_pdf (2.8.2)
       activesupport
+      ostruct
     wkhtmltopdf-binary (0.12.6.8)
     xpath (3.2.0)
       nokogiri (~> 1.8)
@@ -344,7 +346,7 @@ DEPENDENCIES
   turbo-rails
   tzinfo-data
   web-console
-  wicked_pdf (~> 2.6.0)
+  wicked_pdf (~> 2.8.2)
   wkhtmltopdf-binary (~> 0.12.6)
 
 RUBY VERSION
