@@ -1,0 +1,55 @@
+<% content_for :title, "Editing report" %>
+
+<h1>Editing report</h1>
+
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-header bg-primary text-white">
+        <h2 class="h4 mb-0">Edit Report</h2>
+      </div>
+      <div class="card-body">
+        <form action="/reports/<%= @report.id %>" method="post">
+          <input type="hidden" name="_method" value="patch">
+          <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+          
+          <% if @report.errors.any? %>
+            <div class="alert alert-danger">
+              <h4><%= pluralize(@report.errors.count, "error") %> prohibited this report from being saved:</h4>
+              <ul>
+                <% @report.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <div class="mb-3">
+            <label for="report_title" class="form-label">Title</label>
+            <input type="text" name="report[title]" id="report_title" class="form-control" value="<%= @report.title %>">
+          </div>
+
+          <div class="mb-3">
+            <label for="report_content" class="form-label">Content</label>
+            <textarea name="report[content]" id="report_content" rows="10" class="form-control"><%= @report.content %></textarea>
+            <div class="form-text text-muted">
+              This content will be used as the executive summary in your report.
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-between">
+            <a href="/reports/<%= @report.id %>" class="btn btn-outline-secondary">Cancel</a>
+            <button type="submit" class="btn btn-primary">Update Report</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br>
+
+<div>
+  <%= link_to "Show this report", @report %> |
+  <%= link_to "Back to reports", reports_path %>
+</div>

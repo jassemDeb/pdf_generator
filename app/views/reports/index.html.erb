@@ -1,0 +1,160 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Reports" %>
+
+<div class="page-header">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <h1 class="display-5 fw-bold">Your Reports</h1>
+        <p class="text-muted">Manage and generate branded PDF reports</p>
+      </div>
+      <div class="col-md-6 text-md-end">
+        <a href="/reports/new" class="btn btn-primary btn-lg">
+          <span class="icon-plus"></span> Create New Report
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <% if @reports.any? %>
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">
+            <span class="icon-file"></span> All Reports
+          </h5>
+          <span class="badge bg-primary"><%= @reports.count %> Reports</span>
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-hover mb-0">
+              <thead>
+                <tr>
+                  <th><span class="icon-file"></span> Title</th>
+                  <th><span class="icon-info"></span> Created</th>
+                  <th class="text-end">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @reports.each do |report| %>
+                  <tr>
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <div class="report-icon me-3">
+                          <span class="badge rounded-circle p-3" style="background-color: var(--secondary-color);">
+                            <span class="icon-file"></span>
+                          </span>
+                        </div>
+                        <div>
+                          <h6 class="mb-0"><%= report.title %></h6>
+                          <small class="text-muted"><%= report.content.truncate(50) if report.content %></small>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div>
+                        <span class="fw-medium" style="color: var(--primary-color);"><%= report.created_at.strftime("%B %d, %Y") %></span>
+                        <div><small class="text-muted"><%= report.created_at.strftime("%H:%M") %></small></div>
+                      </div>
+                    </td>
+                    <td class="text-end">
+                      <div class="btn-group">
+                        <a href="/reports/<%= report.id %>" class="btn btn-sm btn-outline-primary">
+                          <span class="icon-eye"></span> View
+                        </a>
+                        <a href="/reports/<%= report.id %>/download_pdf.pdf" class="btn btn-sm btn-success">
+                          <span class="icon-download"></span> PDF
+                        </a>
+                        <a href="/reports/<%= report.id %>/edit" class="btn btn-sm btn-outline-secondary">
+                          <span class="icon-edit"></span> Edit
+                        </a>
+                      </div>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card-footer bg-white d-flex justify-content-between align-items-center">
+          <span class="text-muted small">Showing all reports</span>
+          <a href="/reports/new" class="btn btn-sm btn-primary">
+            <span class="icon-plus"></span> Add New
+          </a>
+        </div>
+      </div>
+    <% else %>
+      <div class="card">
+        <div class="card-body empty-state">
+          <img src="/assets/2.png" alt="Logo" style="height: 80px; margin-bottom: 20px;">
+          <span class="icon-file" style="font-size: 3rem; color: var(--primary-color);"></span>
+          <h3>No Reports Yet</h3>
+          <p class="text-muted">Create your first report to get started with branded PDF generation</p>
+          <a href="/reports/new" class="btn btn-primary btn-lg mt-3">
+            <span class="icon-plus"></span> Create Your First Report
+          </a>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="row mt-4">
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0"><span class="icon-info"></span> About Reports</h5>
+      </div>
+      <div class="card-body">
+        <p>Generate professional PDF reports with your branding and custom content.</p>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item d-flex align-items-center">
+            <span class="icon-check me-2" style="color: var(--secondary-color);"></span>
+            Branded PDF generation
+          </li>
+          <li class="list-group-item d-flex align-items-center">
+            <span class="icon-check me-2" style="color: var(--secondary-color);"></span>
+            Custom executive summaries
+          </li>
+          <li class="list-group-item d-flex align-items-center">
+            <span class="icon-check me-2" style="color: var(--secondary-color);"></span>
+            Professional formatting
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0"><span class="icon-info"></span> Report Statistics</h5>
+      </div>
+      <div class="card-body">
+        <div class="row text-center">
+          <div class="col-md-4">
+            <div class="p-3 rounded" style="background-color: rgba(42, 76, 170, 0.1);">
+              <h2 style="color: var(--primary-color);"><%= @reports.count %></h2>
+              <p class="mb-0 text-muted">Total Reports</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="p-3 rounded" style="background-color: rgba(0, 173, 238, 0.1);">
+              <h2 style="color: var(--secondary-color);"><%= @reports.where("created_at >= ?", 7.days.ago).count %></h2>
+              <p class="mb-0 text-muted">Last 7 Days</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="p-3 rounded" style="background-color: rgba(90, 90, 90, 0.1);">
+              <h2 style="color: var(--dark-color);"><%= @reports.where("created_at >= ?", Date.today).count %></h2>
+              <p class="mb-0 text-muted">Today</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

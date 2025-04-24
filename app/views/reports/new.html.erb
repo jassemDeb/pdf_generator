@@ -1,0 +1,119 @@
+<% content_for :title, "New report" %>
+
+<div class="page-header">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-8">
+        <h1 class="display-5 fw-bold">Create New Report</h1>
+        <p class="text-muted">Fill in the details to generate a branded PDF report</p>
+      </div>
+      <div class="col-md-4 text-md-end">
+        <a href="/reports" class="btn btn-outline-primary">
+          <i class="fas fa-arrow-left me-2"></i>Back to Reports
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-md-10 col-lg-8">
+    <div class="card shadow-sm">
+      <div class="card-header">
+        <h5 class="mb-0"><i class="fas fa-file-alt me-2"></i>Report Information</h5>
+      </div>
+      <div class="card-body">
+        <form action="/reports" method="post">
+          <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+          
+          <% if @report.errors.any? %>
+            <div class="alert alert-danger">
+              <h5 class="alert-heading"><i class="fas fa-exclamation-triangle me-2"></i><%= pluralize(@report.errors.count, "error") %> prohibited this report from being saved:</h5>
+              <ul class="mb-0">
+                <% @report.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <div class="mb-4">
+            <label for="report_title" class="form-label">Report Title</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fas fa-heading"></i></span>
+              <input type="text" name="report[title]" id="report_title" class="form-control form-control-lg" placeholder="Enter a descriptive title for your report" value="<%= @report.title %>">
+            </div>
+            <div class="form-text text-muted">
+              The title will appear in the report header and PDF filename
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label for="report_content" class="form-label">Executive Summary</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fas fa-align-left"></i></span>
+              <textarea name="report[content]" id="report_content" rows="10" class="form-control" placeholder="Enter the executive summary for your report"><%= @report.content %></textarea>
+            </div>
+            <div class="form-text text-muted">
+              This content will be used as the executive summary in your report. You can use HTML formatting.
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-between mt-4">
+            <a href="/reports" class="btn btn-outline-secondary">
+              <i class="fas fa-times me-2"></i>Cancel
+            </a>
+            <button type="submit" class="btn btn-primary btn-lg">
+              <i class="fas fa-save me-2"></i>Create Report
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    
+    <div class="card mt-4">
+      <div class="card-header bg-light">
+        <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>About PDF Reports</h5>
+      </div>
+      <div class="card-body">
+        <p>Your PDF report will include the following sections:</p>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item d-flex align-items-center">
+            <i class="fas fa-check-circle text-success me-3"></i>
+            <div>
+              <strong>Executive Summary</strong>
+              <div class="text-muted small">Overview of findings and key points</div>
+            </div>
+          </li>
+          <li class="list-group-item d-flex align-items-center">
+            <i class="fas fa-check-circle text-success me-3"></i>
+            <div>
+              <strong>DNS Information</strong>
+              <div class="text-muted small">Domain records and WHOIS data</div>
+            </div>
+          </li>
+          <li class="list-group-item d-flex align-items-center">
+            <i class="fas fa-check-circle text-success me-3"></i>
+            <div>
+              <strong>Network Intelligence</strong>
+              <div class="text-muted small">IP addresses and network information</div>
+            </div>
+          </li>
+          <li class="list-group-item d-flex align-items-center">
+            <i class="fas fa-check-circle text-success me-3"></i>
+            <div>
+              <strong>Risk Assessment</strong>
+              <div class="text-muted small">Detailed breakdown of identified risks</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br>
+
+<div>
+  <%= link_to "Back to reports", reports_path %>
+</div>
