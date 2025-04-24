@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 ruby '3.2.3'
 
 # Rails framework
-gem 'rails', '~> 7.1.0'
+gem 'rails', '~> 8.0.2'
 
 # Database
 gem 'sqlite3', '~> 1.6.0'
