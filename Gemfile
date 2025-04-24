@@ -25,7 +25,7 @@ gem 'execjs'
 gem 'wicked_pdf', '~> 2.6.0'
 gem 'wkhtmltopdf-binary', '~> 0.12.6'
 gem 'pdfkit'
-gem 'prawn', '~> 2.4.0'
+gem 'prawn', '~> 2.5.0'
 gem 'prawn-table', '~> 0.2.2'
 
 # HTML templating and styling
