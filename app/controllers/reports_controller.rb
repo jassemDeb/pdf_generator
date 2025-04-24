@@ -1,5 +1,5 @@
 class ReportsController < ApplicationController
-  before_action :set_report, only: %i[ show edit update destroy download_pdf ]
+  before_action :set_report, only: %i[ show edit update destroy download_pdf preview_pdf ]
 
   # GET /reports or /reports.json
   def index
@@ -119,6 +119,69 @@ class ReportsController < ApplicationController
         end
       end
     end
+  end
+
+  # GET /reports/1/preview_pdf
+  def preview_pdf
+    # Generate sample data for the report
+    @report_data = generate_sample_data
+    
+    # Prepare logo for PDF
+    @logo_path = Rails.root.join('app', 'assets', 'images', '1.png')
+    @logo_data = nil
+    if File.exist?(@logo_path)
+      @logo_data = Base64.strict_encode64(File.read(@logo_path))
+    end
+
+    # Method 1: Using WickedPDF (original method)
+    if params[:use_wicked].present?
+      pdf = render_to_string(
+        pdf: "#{@report.title.parameterize}",
+        template: 'reports/report_template',
+        layout: 'pdf',
+        page_size: 'A4',
+        encoding: 'UTF-8',
+        margin: { top: 10, bottom: 10, left: 10, right: 10 },
+        footer: { center: '[page] of [topage]', font_size: 9 },
+        disable_smart_shrinking: true,
+        print_media_type: true,
+        dpi: 300,
+        image_quality: 100
+      )
+    else
+      # Method 2: Using PDFKit (alternative method)
+      html = render_to_string(
+        template: 'reports/report_template',
+        layout: 'pdf',
+        formats: [:pdf],
+        handlers: [:erb]
+      )
+      
+      # Create PDF from HTML with all options in one go
+      kit = PDFKit.new(html, {
+        page_size: 'A4',
+        footer_center: 'Page [page] of [topage]',
+        footer_font_size: 9,
+        margin_top: '10mm',
+        margin_bottom: '10mm',
+        margin_left: '10mm',
+        margin_right: '10mm',
+        encoding: 'UTF-8',
+        print_media_type: true,
+        disable_smart_shrinking: true,
+        dpi: 300,
+        image_quality: 100,
+        enable_local_file_access: true
+      })
+      
+      pdf = kit.to_pdf
+    end
+    
+    # Send the PDF with inline disposition so it displays in the browser
+    send_data pdf, 
+              filename: "#{@report.title.parameterize}.pdf",
+              type: 'application/pdf',
+              disposition: 'inline'
   end
 
   private

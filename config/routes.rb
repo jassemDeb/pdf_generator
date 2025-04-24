@@ -9,6 +9,9 @@ Rails.application.routes.draw do
 
   # Route for generating PDF
   get 'reports/:id/download_pdf', to: 'reports#download_pdf', as: 'download_report'
+  
+  # Route for previewing PDF inline
+  get 'reports/:id/preview_pdf', to: 'reports#preview_pdf', as: 'preview_report'
 
   # Defines the root path route ("/")
   root "reports#index"
