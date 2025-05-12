@@ -22,7 +22,7 @@ gem 'execjs'
 # gem 'therubyracer'  # Commented out as we'll use Node.js instead
 
 # PDF generation
-gem 'wicked_pdf', '~> 2.6.0'
+gem 'wicked_pdf', '~> 2.8.2'
 gem 'wkhtmltopdf-binary', '~> 0.12.6'
 gem 'pdfkit'
 gem 'prawn', '~> 2.4.0'
